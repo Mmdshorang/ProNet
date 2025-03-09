@@ -1,9 +1,8 @@
-// resources/views/companies/index.blade.php
 @extends('layouts.app')
 
 @section('content')
     <h1>Companies</h1>
-    <a href="{{ route('companies.index') }}">لیست شرکت‌ها</a>
+    <a href="{{ route('companies.create') }}">اضافه کردن شرکت جدید</a>
 
     <ul>
         @foreach($companies as $company)
