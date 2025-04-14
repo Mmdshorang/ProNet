@@ -7,8 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class CompanyRating extends Model
 {
     protected $fillable = [
-        'company_id', 'reviewer_id', 'salary_timeliness',
-        'benefits', 'work_environment', 'management', 'comment'
+        'company_id', 'reviewer_id', 'salary_timeliness', 'benefits',
+        'work_environment', 'management', 'comment'
     ];
 
     public function company()
@@ -18,6 +18,6 @@ class CompanyRating extends Model
 
     public function reviewer()
     {
-        return $this->belongsTo(Employee::class);
+        return $this->belongsTo(User::class, 'reviewer_id');
     }
 }

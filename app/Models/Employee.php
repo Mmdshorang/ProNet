@@ -28,11 +28,7 @@ class Employee extends Model
         return $this->hasMany(Achievement::class);
     }
 
-    public function roles()
-    {
-        return $this->belongsToMany(Role::class, 'employee_roles');
-    }
-
+ 
     public function jobHistory()
     {
         return $this->hasMany(JobHistory::class);
