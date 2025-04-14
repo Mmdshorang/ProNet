@@ -28,7 +28,7 @@ class CreateCompanyRatingsTable extends Migration
             $table->timestamps();
 
             $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');
-            $table->foreign('reviewer_id')->references('id')->on('employees')->onDelete('cascade');
+            $table->foreign('reviewer_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

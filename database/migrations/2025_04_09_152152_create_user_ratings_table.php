@@ -4,13 +4,13 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateEmployeeRatingsTable extends Migration
+class CreateUserRatingsTable extends Migration
 {
     public function up()
     {
-        Schema::create('employee_ratings', function (Blueprint $table) {
+        Schema::create('user_ratings', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('employee_id');
+            $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('reviewer_id');
             $table->integer('professional_capabilities')->check(function($query) {
                 return $query->between(1, 5);
@@ -30,13 +30,13 @@ class CreateEmployeeRatingsTable extends Migration
             $table->text('comment')->nullable();
             $table->timestamps();
 
-            $table->foreign('employee_id')->references('id')->on('employees')->onDelete('cascade');
-            $table->foreign('reviewer_id')->references('id')->on('employees')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('reviewer_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 
     public function down()
     {
-        Schema::dropIfExists('employee_ratings');
+        Schema::dropIfExists('user_ratings');
     }
 }
