@@ -2,41 +2,49 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Employee extends Model
 {
-    use HasFactory;
+    protected $fillable = ['company_id', 'name', 'email', 'password', 'location_id'];
 
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
-        'company_id',
-        'position',
-    ];
-
-    // تعریف رابطه برعکس: هر کارمند متعلق به یک شرکت است
     public function company()
     {
         return $this->belongsTo(Company::class);
     }
-}
 
-class EmployeeSkill extends Model
-{
-    use HasFactory;
-
-    protected $fillable = ['employee_id', 'level'];
-
-    public function employee()
+    public function location()
     {
-        return $this->belongsTo(Employee::class);
+        return $this->belongsTo(Location::class);
     }
 
-    public function skill()
+    public function skills()
     {
-        return $this->belongsTo(Skill::class);
+        return $this->hasMany(Skill::class);
+    }
+
+    public function achievements()
+    {
+        return $this->hasMany(Achievement::class);
+    }
+
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class, 'employee_roles');
+    }
+
+    public function jobHistory()
+    {
+        return $this->hasMany(JobHistory::class);
+    }
+
+    public function employeeRatings()
+    {
+        return $this->hasMany(EmployeeRating::class, 'employee_id');
+    }
+
+    public function givenRatings()
+    {
+        return $this->hasMany(EmployeeRating::class, 'reviewer_id');
     }
 }
