@@ -2,47 +2,45 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 class User extends Authenticatable
-{
-    /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable;
+{   use HasFactory;
+    protected $fillable = ['role', 'name', 'email', 'password', 'location_id'];
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var list<string>
-     */
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
-    ];
-
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var list<string>
-     */
-    protected $hidden = [
-        'password',
-        'remember_token',
-    ];
-
-    /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
-    protected function casts(): array
+    public function location()
     {
-        return [
-            'email_verified_at' => 'datetime',
-            'password' => 'hashed',
-        ];
+        return $this->belongsTo(Location::class);
+    }
+
+    public function companies()
+    {
+        return $this->belongsToMany(Company::class, 'user_company')
+                    ->withPivot('job_title', 'start_date', 'end_date', 'description', 'employment_type');
+    }
+
+    public function skills()
+    {
+        return $this->hasMany(Skill::class);
+    }
+
+    public function achievements()
+    {
+        return $this->hasMany(Achievement::class);
+    }
+
+    public function receivedRatings()
+    {
+        return $this->hasMany(UserRating::class, 'user_id');
+    }
+
+    public function givenUserRatings()
+    {
+        return $this->hasMany(UserRating::class, 'reviewer_id');
+    }
+
+    public function givenCompanyRatings()
+    {
+        return $this->hasMany(CompanyRating::class, 'reviewer_id');
     }
 }

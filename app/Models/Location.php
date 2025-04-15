@@ -13,8 +13,8 @@ class Location extends Model
         return $this->hasMany(Company::class);
     }
 
-    public function employees()
+    public function users()
     {
-        return $this->hasMany(Employee::class);
+        return $this->hasMany(User::class);
     }
 }

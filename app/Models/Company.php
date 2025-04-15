@@ -13,9 +13,10 @@ class Company extends Model
         return $this->belongsTo(Location::class);
     }
 
-    public function employees()
+    public function users()
     {
-        return $this->hasMany(Employee::class);
+        return $this->belongsToMany(User::class, 'user_company')
+                    ->withPivot('job_title', 'start_date', 'end_date', 'description', 'employment_type');
     }
 
     public function ratings()
