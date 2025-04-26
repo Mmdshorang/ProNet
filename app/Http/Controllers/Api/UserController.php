@@ -10,8 +10,9 @@ class UserController extends Controller
 {
     public function index()
     {
-        return response()->json(User::with('location')->paginate(10));
+        return response()->json(User::with('location')->get());
     }
+
 
     public function store(Request $request)
     {
